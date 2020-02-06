@@ -153,11 +153,8 @@ MonoBehaviour:
   backgroundObj: {fileID: 2083682347}
   letterObj: {fileID: 5825569972434532089, guid: 24fbc3a90f3845a41ae77605bbc18c87,
     type: 3}
-  rows: 10
-  cols: 10
-  spacing: 1.1
-  gridPosX: 600
-  gridPosY: 670
+  rows: 20
+  cols: 20
 --- !u!4 &437496981
 Transform:
   m_ObjectHideFlags: 0
