@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
     //posição do grid no espaço
     private float gridPosX = Screen.width * 0.45f, gridPosY = Screen.height * 0.96f;
 
-    private string[,] matrix; 
+    private string[,] matrix;
     
 
     private string[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", 
@@ -30,7 +30,7 @@ public class GridManager : MonoBehaviour
         matrix = new string[rows, cols];
        
         //gera a matriz proceduralmente
-        GenerateMatrix();
+        GenerateMatrix("Colors");
 
         //gera o grid de acordo com a matriz que foi produzida
         GenerateGrid();
@@ -78,72 +78,121 @@ public class GridManager : MonoBehaviour
         }
     }
 
+
     //método para preencher a matrix proceduralmente
-    private void GenerateMatrix()
+    private void GenerateMatrix(string txtTheme)
     {
-        Fruits fruits = (Fruits) ThemeFactory.CreateTheme("fruits");
-       
-        Debug.Log(fruits.SelectedWords[0]);
-        Debug.Log(fruits.WordsOrientation[0]);
-        Debug.Log(fruits.SelectedWords[1]);
-        Debug.Log(fruits.WordsOrientation[1]);
-        Debug.Log(fruits.SelectedWords[2]);
-        Debug.Log(fruits.WordsOrientation[2]);
-        Debug.Log(fruits.SelectedWords[3]);
-        Debug.Log(fruits.WordsOrientation[3]);
-        Debug.Log(fruits.SelectedWords[4]);
-        Debug.Log(fruits.WordsOrientation[4]);
-        
+        Theme theme = ThemeFactory.CreateTheme(txtTheme);
+
 
         //percorre linhas e colunas
+        // para preencher a matriz com as palavras selecionadas
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < cols; col++)
             {
                 //percorre a lista de palavras selecionadas
-                for (int i = 0; i < fruits.SelectedWords.Count; i++)
+                for (int i = 0; i < theme.SelectedWords.Count; i++)
                 {
                     //verifica a posição da primeira letra de cada palavra
-                    if (row == fruits.SelectedWordsPosY[i] && col == fruits.SelectedWordsPosX[i])
+                    if (row == theme.SelectedWordsPosY[i] && col == theme.SelectedWordsPosX[i])
                     {
                         //verifica qual é a orientação da palavra na matriz
-                        if (fruits.WordsOrientation[i].ToLower() == "horizontal")
+                        if (theme.WordsOrientation[i].ToLower() == "horizontal")
                         {
-                            //preenche na tabela cada letra de acordo com a orientação.
-                            for (int j = 0; j < fruits.SelectedWords[i].Length; j++)
+                            //percorre cada letra da palavra
+                            for (int j = 0; j < theme.SelectedWords[i].Length; j++)
                             {
-                                matrix[row, col + j] = fruits.SelectedWords[i][j].ToString().ToUpper();
+
+                                //verifica se o espaço que vai ser inserido a letra está vazio ou contém a mesma letra
+                                if (matrix[row, col + j] == null || matrix[row, col + j] == theme.SelectedWords[i][j].ToString().ToUpper())
+                                {
+
+                                    matrix[row, col + j] = theme.SelectedWords[i][j].ToString().ToUpper();
+                                    continue;
+
+                                }
+                                // se não, sorteia uma nova posição para a palavra onde ela não ocupe a mesma de alguma palavra existente
+                                else
+                                {
+                                    theme.SelectedWordsPosX[i] = Random.Range(0, cols - theme.SelectedWords[i].Length);
+                                    theme.SelectedWordsPosY[i] = Random.Range(0, rows);
+                                    i--;
+                                    row = 0;
+                                    col = 0;
+                                    break;
+                                }
                             }
-                        
-                        }else if (fruits.WordsOrientation[i].ToLower() == "vertical")
+
+                        }
+                        else if (theme.WordsOrientation[i].ToLower() == "vertical")
                         {
-                            for (int j = 0; j < fruits.SelectedWords[i].Length; j++)
+                            for (int j = 0; j < theme.SelectedWords[i].Length; j++)
                             {
-                                matrix[row+j, col] = fruits.SelectedWords[i][j].ToString().ToUpper();
+
+                                if (matrix[row + j, col] == null || matrix[row + j, col] == theme.SelectedWords[i][j].ToString().ToUpper())
+                                {
+
+                                    matrix[row + j, col] = theme.SelectedWords[i][j].ToString().ToUpper();
+                                    continue;
+
+                                }
+                                else
+                                {
+                                    theme.SelectedWordsPosX[i] = Random.Range(0, cols);
+                                    theme.SelectedWordsPosY[i] = Random.Range(0, rows - theme.SelectedWords[i].Length);
+                                    i--;
+                                    row = 0;
+                                    col = 0;
+                                    break;
+                                }
                             }
-                        
-                        }else if (fruits.WordsOrientation[i].ToLower() == "diagonal")
+
+                        }
+                        else if (theme.WordsOrientation[i].ToLower() == "diagonal")
                         {
-                            for (int j = 0; j < fruits.SelectedWords[i].Length; j++)
+                            for (int j = 0; j < theme.SelectedWords[i].Length; j++)
                             {
-                                matrix[row + j, col + j] = fruits.SelectedWords[i][j].ToString().ToUpper();
+
+                                if (matrix[row + j, col + j] == null || matrix[row + j, col + j] == theme.SelectedWords[i][j].ToString().ToUpper())
+                                {
+
+                                    matrix[row + j, col + j] = theme.SelectedWords[i][j].ToString().ToUpper();
+                                    continue;
+                                }
+                                else
+                                {
+                                    theme.SelectedWordsPosX[i] = Random.Range(0, cols - theme.SelectedWords[i].Length);
+                                    theme.SelectedWordsPosY[i] = Random.Range(0, rows - theme.SelectedWords[i].Length);
+                                    i--;
+                                    row = 0;
+                                    col = 0;
+                                    break;
+                                }
                             }
                         }
-                        
+
 
                     }
-                    //preenche os espaços restantes com letras aleatórias
-                    else if (matrix[row, col] == null)
-                    {
-                        matrix[row, col] = alphabet[Random.Range(0, alphabet.Length)];
-                    }
-                }             
+
+                }
 
             }
         }
 
-
-
+        //preenche os espaços vazios da matriz com letras aleatórias.
+        
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < cols; col++)
+            {
+                if (matrix[row, col]==null)
+                {
+                    matrix[row, col] = alphabet[Random.Range(0, alphabet.Length)];
+                }
+            }
+        }
+        
     }
 
 

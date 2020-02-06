@@ -9,8 +9,17 @@ public static class ThemeFactory
     {
         if (theme.ToLower() == "fruits")
         {
-            Fruits fruits = new Fruits(5,20,20);
+            string[] wordPool = { "Banana", "Watermelon", "Apple", "Strawberry", "Orange", "Coconut", "Carambola",
+            "Grapes", "Lemon", "Mango", "Pear", "Pitanga", "Tangerine", "Plum", "Pitaya"};
+            Fruits fruits = new Fruits(theme,5,wordPool,20,20);
             return fruits;
+        }
+        else if (theme.ToLower() == "colors")
+        {
+            string[] wordPool = {"White", "Black", "Blue", "Yellow", "Brown", "Pink", "Purple", 
+                "Orange", "Green", "Red", "Cyan", "Gold", "Salmon", "Gray", "Magenta"};
+            Colors colors = new Colors(theme,5,wordPool,20,20);
+            return colors;
         }
         else
         {
