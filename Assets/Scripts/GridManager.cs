@@ -11,10 +11,10 @@ public class GridManager : MonoBehaviour
     public int rows = 20, cols = 20;
 
     //espaçamento entre os objetos letras
-    private float spacing = Screen.width/1280 + 0.1f;
+    private float spacing = 1.1f;
     
     //posição do grid no espaço
-    private float gridPosX = Screen.width * 0.45f, gridPosY = Screen.height * 0.96f;
+    private float gridPosX = 560, gridPosY = 690;
 
     private string[,] matrix;
     
@@ -35,12 +35,6 @@ public class GridManager : MonoBehaviour
         //gera o grid de acordo com a matriz que foi produzida
         GenerateGrid();
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     
@@ -193,9 +187,6 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-
-    
-
 
         
     }

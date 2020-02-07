@@ -9,5 +9,8 @@ public class GameManager
     public Colors colors;
     public string theme = "Fruits";
     public string selectWord = "";
+    public List<List<string>> markedWords = new List<List<string>>();
+    
+   
     
 }
