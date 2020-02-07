@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
 
         qtdWords = theme.QtdWords;
 
+        //colore as palavras com a cor determinada
         for (int i = 0; i < words.Length; i++)
         {
             words[i].text = theme.SelectedWords[i];

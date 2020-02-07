@@ -41,6 +41,7 @@ public abstract class Theme
             this.selectedWords.Add(randomWord);
             this.wordPool.Remove(randomWord);
             this.hexColors.Remove(randomColor);
+            
             if (randomOrientation.ToLower() == "horizontal")
             {
                 this.selectedWordsPosX.Add(Random.Range(0, cols - randomWord.Length));

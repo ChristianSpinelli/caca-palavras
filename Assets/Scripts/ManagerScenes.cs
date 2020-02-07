@@ -19,4 +19,9 @@ public class ManagerScenes : MonoBehaviour
         GameManager.instance = new GameManager();
         GameManager.instance.theme = theme;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

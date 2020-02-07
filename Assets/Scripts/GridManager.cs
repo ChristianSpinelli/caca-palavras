@@ -14,7 +14,7 @@ public class GridManager : MonoBehaviour
     private float spacing = 1.1f;
     
     //posição do grid no espaço
-    private float gridPosX = 560, gridPosY = 690;
+    private float gridPosX = 560, gridPosY = 700;
 
     private string[,] matrix;
     
