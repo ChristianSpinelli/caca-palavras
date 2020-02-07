@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Fruits : Theme
 {
-    public Fruits(string name, int qtdWords, string[] wordPool, int rows, int cols )
-        :base(name,qtdWords,wordPool,rows,cols)
+    public Fruits(string name, int qtdWords, string[] wordPool, string[] colors, int rows, int cols )
+        :base(name,qtdWords,wordPool, colors,rows,cols)
     {
               
         

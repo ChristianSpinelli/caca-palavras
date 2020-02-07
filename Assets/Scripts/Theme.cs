@@ -5,32 +5,42 @@ using UnityEngine;
 public abstract class Theme
 {
     protected string name;
-    protected List<string> wordPool = new List<string>(), selectedWords = new List<string>(), 
-        wordsOrientation = new List<string>();
+    protected List<string> wordPool = new List<string>(), selectedWords = new List<string>(),
+        wordsOrientation = new List<string>(), hexColors = new List<string>(), selectedColors = new List<string>();
     protected List<int> selectedWordsPosX = new List<int>(), selectedWordsPosY = new List<int>();
     protected int qtdWords;
 
 
-    protected Theme(string name, int qtdWords, string[] wordPool, int rows, int cols)
+    protected Theme(string name, int qtdWords, string[] wordPool, string[] colors, int rows, int cols)
     {
         this.name = name;
         this.qtdWords = qtdWords;
-        string[] orientation = {"horizontal","vertical","diagonal"};
-        
+        string[] orientation = { "horizontal", "vertical", "diagonal" };
+
         //lista de palavras do tema
         for (int i = 0; i < wordPool.Length; i++)
         {
             this.wordPool.Add(wordPool[i]);
         }
 
+        //lista de cores da fonte das palavras.
+        for (int i = 0; i < colors.Length; i++)
+        {
+            this.hexColors.Add(colors[i]);
+        }
+
         //preenchendo as palavras que serão usadas no jogo e as posições dela na matriz do caça palavras.
         for (int i = 0; i < qtdWords; i++)
         {
-            string randomWord = this.wordPool[Random.Range(0, this.wordPool.Count)];
+            int randomNumber = Random.Range(0, this.wordPool.Count);
+            string randomColor = this.hexColors[randomNumber];
+            string randomWord = this.wordPool[randomNumber];
             string randomOrientation = orientation[Random.Range(0, orientation.Length)];
             this.WordsOrientation.Add(randomOrientation);
+            this.selectedColors.Add(randomColor);
             this.selectedWords.Add(randomWord);
             this.wordPool.Remove(randomWord);
+            this.hexColors.Remove(randomColor);
             if (randomOrientation.ToLower() == "horizontal")
             {
                 this.selectedWordsPosX.Add(Random.Range(0, cols - randomWord.Length));
@@ -58,8 +68,20 @@ public abstract class Theme
 
     public string Name
     {
-        get{ return name; }
+        get { return name; }
         set { name = value; }
+    }
+
+    public List<string> HexColors
+    {
+        get { return hexColors; }
+        set { hexColors = value; }
+    }
+
+    public List<string> SelectedColors
+    {
+        get { return selectedColors; }
+        set { selectedColors = value; }
     }
 
     public List<string> WordPool

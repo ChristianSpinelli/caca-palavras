@@ -30,11 +30,10 @@ public class GridManager : MonoBehaviour
         matrix = new string[rows, cols];
        
         //gera a matriz proceduralmente
-        GenerateMatrix("Colors");
+        GenerateMatrix(GameManager.instance.theme);
 
         //gera o grid de acordo com a matriz que foi produzida
         GenerateGrid();
-    
 
     }
 
@@ -46,10 +45,12 @@ public class GridManager : MonoBehaviour
 
     
     //método para instanciar a letra escolhida e retorna um GameObject que representa o botão da letra que foir criado
-    private GameObject InstantiateLetter(string letter)
+    private GameObject InstantiateLetter(string letter, int posX, int posY)
     {
         GameObject newLetter = Instantiate(letterObj) as GameObject;
         newLetter.GetComponentInChildren<Text>().text = letter;
+        newLetter.GetComponent<Letter>().posX = posX;
+        newLetter.GetComponent<Letter>().posY = posY;
         newLetter.transform.SetParent(backgroundObj.transform,false);
         
         return newLetter;
@@ -62,7 +63,7 @@ public class GridManager : MonoBehaviour
         {
             for (int col = 0; col < cols; col++)
             {
-                GameObject newLetter = InstantiateLetter(matrix[row,col]);
+                GameObject newLetter = InstantiateLetter(matrix[row,col],col,row);
 
                 //após inserir um elemento no grid atualiza a posição para o próximo
                 /*calcula a posição baseado na posição do elemento na matriz, multiplicado pelo espaçamento entre
@@ -192,6 +193,10 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
+
+    
+
+
         
     }
 
